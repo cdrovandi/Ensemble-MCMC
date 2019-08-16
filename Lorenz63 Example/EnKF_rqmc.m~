@@ -1,0 +1,48 @@
+function loglike = EnKF_rqmc(xinit,y,T,N,theta,sigma,sim_noise_scale,dt,steps_per_obs)
+ 
+H = eye(3);
+R = zeros(3);
+ 
+for i=1:3
+  R(i,i) = sigma(i)^2;
+end
+ 
+loglike = 0;
+ 
+for t = 1:T
+     
+    if (t == 1)
+        xs = zeros(N,3);
+        for i = 1:N
+            [xs(i,1), xs(i,2), xs(i,3)] = simulate_Lorenz63_single(xinit, theta, sim_noise_scale, dt, steps_per_obs);
+        end
+    else
+        Sigma_hat = 0.5 * (Sigma_hat + Sigma_hat'); % Ensure positive definite (might not be due to rounding errors)
+        r = gen_Sobol(ceil(log2(N)),3 + 3*steps_per_obs)'; 
+        r = r(1:N,:);
+        q = norminv(r);
+        L = chol(Sigma_hat,'lower');
+        %xs = mvnrnd(mu_hat',Sigma_hat,N);
+        for i = 1:N
+            a = mu_hat + L*q(i,1:3)';
+            xs(i,:) = a';
+            qs = reshape(q(i,4:end),steps_per_obs,3);
+            [xs(i,1), xs(i,2), xs(i,3)] = simulate_Lorenz63_single_frn(xs(i,:), theta, sim_noise_scale, dt, steps_per_obs,qs);
+        end
+    end   
+     
+    mu_tilde = mean(xs)';
+    Sigma_tilde = cov(xs);    
+    loglike = loglike + log(mvnpdf(y(t,:)', H*mu_tilde, H*Sigma_tilde*H' + R));        
+    K = Sigma_tilde*H'*inv(H*Sigma_tilde*H' + R);    
+    mu_hat = mu_tilde + K*(y(t,:)' - H*mu_tilde);
+    Sigma_hat = (eye(3) - K*H)*Sigma_tilde;
+     
+    %xf{t} = mvnrnd(mu_hat',Sigma_hat,10000);
+     
+end
+ 
+ 
+ 
+ 
+end

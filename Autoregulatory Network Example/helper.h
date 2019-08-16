@@ -1,0 +1,10 @@
+double lnd(double x,double mean,double sd);
+void drift(gsl_vector *driftVec,gsl_vector *process,gsl_vector *pxstarE,double diff);
+void diffusion(gsl_matrix *disp_mat,gsl_vector *process,gsl_vector *pxstarE,double diff);
+void hst(gsl_matrix *hst_mat,gsl_vector *process,gsl_vector *pxstarE);
+void matmul(int d1,int d2,int d3,gsl_matrix *A,gsl_matrix *B,gsl_matrix *C);
+void matvecmul(int d1,int d2,gsl_matrix *A,gsl_vector *B,gsl_vector *C);
+void invert(int d,gsl_matrix *A,gsl_matrix *B);
+void invert2by2(gsl_matrix *A,gsl_matrix *B);
+void mvn_sample(gsl_vector *vec,gsl_vector *me,gsl_matrix *var,int d,gsl_rng *r);
+double lmgpdf(int d,gsl_vector *x,gsl_vector *mu,gsl_matrix *var);
