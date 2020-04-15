@@ -33,5 +33,4 @@ plot(nparticles_list, log(var_ll_estimates_enkf));
 hold on;
 xlabel('particles')
 ylabel('log variance of log likelihood')
-legend({'enkf','bpf','enkf_rqmc'})
 plot(xlim, [log(1.5) log(1.5)], 'Color', 'black');
