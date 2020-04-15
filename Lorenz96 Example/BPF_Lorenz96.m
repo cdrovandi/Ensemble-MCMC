@@ -15,7 +15,7 @@ for t = 1:T
     X = X(r,:);
     
     for i = 1:N
-        X(i,:) = simulate_Lorenz63_single(X(i,:), theta, sim_noise_scale, dt, steps_per_obs);
+	      X(i,:) = simulate_Lorenz96_single(X(i,:), n, theta, sim_noise_scale, dt, steps_per_obs);
         logW(i) = logmvnpdf(y(t,:),X(i,:),R); %Working with log pdfs avoids problems when all pdfs v close to zero
     end
     
