@@ -12,7 +12,7 @@ thetaB = 5; % Observation scale
 
 % Numbers of particles to try
 nreps = 30;
-nparticles_list = 500:500:10000;
+nparticles_list = 1000:1000:10000;
 ntrials = length(nparticles_list);
 
 rng(1);
