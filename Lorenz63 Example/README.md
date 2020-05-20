@@ -1,7 +1,9 @@
 # Code for Bayesian inference of a discretised Lorenz63 SDE.
 
 ## Results
-* `output_Lorenz63.mat` - saved output from all methods
+* `output_Lorenz63.mat` - output from all inference methods
+* `nparticles_comparison*.mat` - eMCMC output with different number of particles
+* `obs_scale_comparison.mat' - eMCMC and pMCMC under different observation scales
 
 ## Our code
 
@@ -16,6 +18,9 @@
 * `EnKF_rqmc.m` - ensemble Kalman filter function with RQMC
 * `loglike_comparison.m` - runs a comparison of log likelihoods from BPF and EnKF
 * `loglike_tuning.m` - runs an analysis to tune number of particles to use
+* `nparticles_comparison.m` - runs eMCMC with various numbers of particles
+* `nparticles_comparison.R` - examines ESS values using R's coda package
+* `obs_scale_comparison.m` - compares MSE from eMCMC and pMCMC under different observation scales
 * `pEnKF.m` - particle ensemble Kalman filter function
 * `plots.m` - creates plots from saved output
 * `run_EnKF_Lorenz63.m` - script to do inference
